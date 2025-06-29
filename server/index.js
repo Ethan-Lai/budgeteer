@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import users from './user.js'
 import pool from './db.js'
+import authRoutes from './routes/authRoutes.js'
 
 const app = express()
 const PORT = process.env.PORT || 6767
