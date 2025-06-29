@@ -21,6 +21,7 @@ const Register = () => {
                 email: data.email,
                 password: data.password
             })
+            localStorage.setItem('token', response.data.token)
             console.log('User created', response.data)
         } catch (err) {
             console.log('Error:', err)
