@@ -37,8 +37,33 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/test', async (req, res) => {
-    res.send('test worked')
+router.post('/login', async (req, res) => {
+    try {
+        // Receive data from FE
+        const { email, password } = req.body
+    
+        // Check if user exists
+        const existingUser = await pool.query(
+            'SELECT * FROM users WHERE email = $1',
+            [email]
+        )
+        if (existingUser.rows.length === 0) {
+            res.status(401).json({ error: 'Email does not exist' })
+        }
+    
+        // Compare passwords
+        const hashedPassword = existingUser.rows[0].password
+        const validPassword = await bcrypt.compare(password, hashedPassword)
+        if (!validPassword) {
+            res.status(401).json({ error: 'Incorrect password' })
+        }
+    
+        // Send back success and token
+        const token = jwt.sign({ id: existingUser.rows[0].id, email: existingUser.rows[0].email }, process.env.JWT_SECRET, { expiresIn: '24h' })
+        res.json({ token })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
 })
 
 

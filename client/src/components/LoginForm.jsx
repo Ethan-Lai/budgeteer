@@ -13,40 +13,41 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from "axios"
 
-const Register = () => {
-    const registerUser = async (formData) => {
+
+const LoginForm = () => {
+    const loginUser = async (formData) => {
         const data = Object.fromEntries(formData)
         try {
-            const response = await axios.post('/api/auth/register', {
+            const response = await axios.post('api/auth/login', {
                 email: data.email,
                 password: data.password
             })
             localStorage.setItem('token', response.data.token)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            console.log('User created', response.data)
+            console.log('User has been logged in', response.data)
         } catch (err) {
-            console.log('Error:', err)
+            console.log('Error: ', err)
         }
     }
 
     return (
         <Card className="w-1/3">
             <CardHeader>
-                <CardTitle>Create an Account</CardTitle>
+                <CardTitle>Sign in</CardTitle>
             </CardHeader>
             <CardContent>
-                <form action={registerUser}>
+                <form action={loginUser}>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" required />
                     <br />
                     <Label htmlFor="password">Password</Label>
                     <Input id="password" name="password" type="password" required />
                     <br />
-                    <Button type="submit">Register</Button>
+                    <Button type="submit">Login</Button>
                 </form>
             </CardContent>
         </Card>
     )
 }
 
-export default Register
+export default LoginForm
