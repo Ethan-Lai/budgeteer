@@ -6,7 +6,21 @@ function Dashboard() {
     const [users, setUsers] = useState([])
 
     const getUser = async () => {
-        const response = await axios.get("/api/user")
+        const token = localStorage.getItem('token')
+        
+        if (!token) {
+            console.log('No token found - user needs to login');
+            return;
+        }
+        
+        // Try and catch here
+
+        // Set the header so the backend can grab for middleware
+        const response = await axios.get("/api/user", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         console.log(response.data)
         setUsers(response.data)
     }

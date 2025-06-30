@@ -2,9 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import users from './user.js'
 import pool from './db.js'
+import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js'
+import authMiddleware from './middleware/authMiddleware.js'
 
 const app = express()
+dotenv.config();
 const PORT = process.env.PORT || 6767
 
 // Middleware
@@ -15,7 +18,7 @@ app.get('/', (req, res) => {
     res.send("Server is ready")
 })
 
-app.get('/api/user', (req, res) => {
+app.get('/api/user', authMiddleware, (req, res) => {
     res.send(users)
 })
 
