@@ -9,9 +9,9 @@ function App() {
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <div className='w-full h-full'>
                 <Routes>
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/' element={<Login />} />
                     <Route path='/register' element={<Register />} />
-                    <Route path='/' element={<Dashboard />} />
+                    <Route path='/dashboard' element={<Dashboard />} />
                 </Routes>
             </div>
         </ThemeProvider>

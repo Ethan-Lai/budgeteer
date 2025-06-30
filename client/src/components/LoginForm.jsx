@@ -12,9 +12,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 const LoginForm = () => {
+    const navigate = useNavigate()
+
     const loginUser = async (formData) => {
         const data = Object.fromEntries(formData)
         try {
@@ -25,6 +28,7 @@ const LoginForm = () => {
             localStorage.setItem('token', response.data.token)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
             console.log('User has been logged in', response.data)
+            navigate('/dashboard')
         } catch (err) {
             console.log('Error: ', err)
         }
