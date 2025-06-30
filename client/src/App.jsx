@@ -1,27 +1,20 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import User from './User'
-import axios from 'axios'
+import { Routes, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import { ThemeProvider } from "@/components/ThemeProvider"
 
 function App() {
-    const [users, setUsers] = useState([])
-
-    const getUser = async () => {
-        const response = await axios.get("/api/user")
-        console.log(response.data)
-        setUsers(response.data)
-    }
-
-    useEffect(() => {
-        getUser()
-    }, [])
-
     return (
-        <div>
-            {users.map((user, index) => 
-                <User key={index} name={user.name} username={user.username} email={user.email} />
-            )}
-        </div>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <div className='w-full h-full'>
+                <Routes>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/' element={<Dashboard />} />
+                </Routes>
+            </div>
+        </ThemeProvider>
     )
 }
 
