@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import { ThemeProvider } from "@/components/ThemeProvider"
+import { AppLayout } from './components/layouts/AppLayout'
 
 function App() {
     return (
@@ -11,7 +12,11 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Login />} />
                     <Route path='/register' element={<Register />} />
-                    <Route path='/dashboard' element={<Dashboard />} />
+
+                    {/* App is for protected routes */}
+                    <Route path='/app' element={<AppLayout />}>
+                        <Route path='dashboard' element={<Dashboard />} />
+                    </Route>
                 </Routes>
             </div>
         </ThemeProvider>

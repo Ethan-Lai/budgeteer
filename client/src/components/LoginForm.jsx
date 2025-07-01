@@ -28,7 +28,7 @@ const LoginForm = () => {
             localStorage.setItem('token', response.data.token)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
             console.log('User has been logged in', response.data)
-            navigate('/dashboard')
+            navigate('/app/dashboard')
         } catch (err) {
             console.log('Error: ', err)
         }
