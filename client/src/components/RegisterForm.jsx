@@ -11,19 +11,16 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { registerUser } from "@/services/authService"
 
 const Register = () => {
-    const registerUser = async (formData) => {
+    const navigate = useNavigate()
+    
+    const handleRegister = async (formData) => {
         const data = Object.fromEntries(formData)
         try {
-            const response = await axios.post('/api/auth/register', {
-                email: data.email,
-                password: data.password
-            })
-            localStorage.setItem('token', response.data.token)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            console.log('User created', response.data)
+            await registerUser(data)
             navigate('/app/dashboard')
         } catch (err) {
             console.log('Error:', err)
@@ -36,7 +33,7 @@ const Register = () => {
                 <CardTitle>Create an Account</CardTitle>
             </CardHeader>
             <CardContent>
-                <form action={registerUser}>
+                <form action={handleRegister}>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" required />
                     <br />

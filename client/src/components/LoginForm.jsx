@@ -11,23 +11,17 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { loginUser } from "@/services/authService"
 
 
 const LoginForm = () => {
     const navigate = useNavigate()
 
-    const loginUser = async (formData) => {
+    const handleLogin = async (formData) => {
         const data = Object.fromEntries(formData)
         try {
-            const response = await axios.post('api/auth/login', {
-                email: data.email,
-                password: data.password
-            })
-            localStorage.setItem('token', response.data.token)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            console.log('User has been logged in', response.data)
+            await loginUser(data)
             navigate('/app/dashboard')
         } catch (err) {
             console.log('Error: ', err)
@@ -40,7 +34,7 @@ const LoginForm = () => {
                 <CardTitle>Sign in</CardTitle>
             </CardHeader>
             <CardContent>
-                <form action={loginUser}>
+                <form action={handleLogin}>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" required />
                     <br />
