@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Settings from './pages/Settings'
+import Trips from './pages/Trips'
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { AppLayout } from './components/layouts/AppLayout'
 
@@ -16,6 +18,8 @@ function App() {
                     {/* App is for protected routes */}
                     <Route path='/app' element={<AppLayout />}>
                         <Route path='dashboard' element={<Dashboard />} />
+                        <Route path='settings' element={<Settings />} />
+                        <Route path='trips' element={<Trips />} />
                     </Route>
                 </Routes>
             </div>

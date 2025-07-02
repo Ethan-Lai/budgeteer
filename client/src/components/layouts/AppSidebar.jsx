@@ -11,29 +11,24 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "../ui/button"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 
 // Menu items.
 const items = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/app/dashboard",
     icon: Home,
   },
   {
     title: "Trips",
-    url: "#",
+    url: "/app/trips",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
     title: "Settings",
-    url: "#",
+    url: "/app/settings",
     icon: Settings,
   },
 ]
@@ -58,10 +53,10 @@ export function AppSidebar() {
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild>
-                                <a href={item.url}>
+                                <Link to={item.url}>
                                     <item.icon />
                                     <span>{item.title}</span>
-                                </a>
+                                </Link>
                                 </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
