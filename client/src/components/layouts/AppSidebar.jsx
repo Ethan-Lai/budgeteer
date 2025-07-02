@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 

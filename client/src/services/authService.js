@@ -1,5 +1,9 @@
 import axios from "axios"
 
+export const getToken = () => {
+    return localStorage.getItem('token')
+}
+
 export const loginUser = async (data) => {
     try {
         const response = await axios.post('api/auth/login', {
