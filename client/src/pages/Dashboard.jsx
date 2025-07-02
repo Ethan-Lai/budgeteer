@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import User from '../User'
 import axios from 'axios'
+import { getToken } from '@/services/authService'
 
 function Dashboard() {
     const [users, setUsers] = useState([])
 
     const getUser = async () => {
-        const token = localStorage.getItem('token')
+        const token = getToken()
         
         if (!token) {
             console.log('No token found - user needs to login');

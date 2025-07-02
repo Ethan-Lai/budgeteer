@@ -11,47 +11,40 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { registerUser } from "@/services/authService"
 
-
-const LoginForm = () => {
+const Register = () => {
     const navigate = useNavigate()
-
-    const loginUser = async (formData) => {
+    
+    const handleRegister = async (formData) => {
         const data = Object.fromEntries(formData)
         try {
-            const response = await axios.post('api/auth/login', {
-                email: data.email,
-                password: data.password
-            })
-            localStorage.setItem('token', response.data.token)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            console.log('User has been logged in', response.data)
-            navigate('/dashboard')
+            await registerUser(data)
+            navigate('/app/dashboard')
         } catch (err) {
-            console.log('Error: ', err)
+            console.log('Error:', err)
         }
     }
 
     return (
         <Card className="w-1/3">
             <CardHeader>
-                <CardTitle>Sign in</CardTitle>
+                <CardTitle>Create an Account</CardTitle>
             </CardHeader>
             <CardContent>
-                <form action={loginUser}>
+                <form action={handleRegister}>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" required />
                     <br />
                     <Label htmlFor="password">Password</Label>
                     <Input id="password" name="password" type="password" required />
                     <br />
-                    <Button type="submit">Login</Button>
+                    <Button type="submit">Register</Button>
                 </form>
             </CardContent>
         </Card>
     )
 }
 
-export default LoginForm
+export default Register
