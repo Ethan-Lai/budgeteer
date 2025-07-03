@@ -4,6 +4,7 @@ import users from './user.js'
 import pool from './db.js'
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js'
+import tripRoutes from './routes/tripRoutes.js'
 import authMiddleware from './middleware/authMiddleware.js'
 
 const app = express()
@@ -36,6 +37,7 @@ app.get('/api/test-db', async (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes)
+app.use('/api/trips', tripRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`)
