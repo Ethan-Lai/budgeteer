@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { loginUser } from "@/services/authService"
 
 
@@ -43,6 +43,7 @@ const LoginForm = () => {
                     <br />
                     <Button type="submit">Login</Button>
                 </form>
+                <Link to="/register">Don't have an account?</Link>
             </CardContent>
         </Card>
     )

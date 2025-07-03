@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { registerUser } from "@/services/authService"
 
 const Register = () => {
@@ -30,7 +30,7 @@ const Register = () => {
     return (
         <Card className="w-1/3">
             <CardHeader>
-                <CardTitle>Create an Account</CardTitle>
+                <CardTitle>Sign up</CardTitle>
             </CardHeader>
             <CardContent>
                 <form action={handleRegister}>
@@ -42,6 +42,7 @@ const Register = () => {
                     <br />
                     <Button type="submit">Register</Button>
                 </form>
+                <Link to="/">Already have an account?</Link>
             </CardContent>
         </Card>
     )
