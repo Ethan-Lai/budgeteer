@@ -6,6 +6,7 @@ import Settings from './pages/Settings'
 import Trips from './pages/Trips'
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { AppLayout } from './components/layouts/AppLayout'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                     <Route path='/register' element={<Register />} />
 
                     {/* App is for protected routes */}
-                    <Route path='/app' element={<AppLayout />}>
+                    <Route path='/app' element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
                         <Route path='dashboard' element={<Dashboard />} />
                         <Route path='settings' element={<Settings />} />
                         <Route path='trips' element={<Trips />} />
