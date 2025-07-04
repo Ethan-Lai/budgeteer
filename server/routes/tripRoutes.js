@@ -22,4 +22,19 @@ router.post('/', async (req, res) => {
     }
 }) 
 
+// Get trips
+router.get('/', async (req, res) => {
+    try {
+        const user_id = req.user.id
+
+        const trips = await pool.query(
+            `SELECT * FROM trips WHERE user_id = $1`,
+            [user_id]
+        )
+        res.status(200).json({ trips: trips.rows })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
 export default router

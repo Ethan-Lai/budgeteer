@@ -37,7 +37,7 @@ app.get('/api/test-db', async (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes)
-app.use('/api/trips', tripRoutes)
+app.use('/api/trips', authMiddleware, tripRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`)
