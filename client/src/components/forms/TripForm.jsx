@@ -21,6 +21,7 @@ export function TripForm() {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
   const [error, setError] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -62,12 +63,13 @@ export function TripForm() {
     setError("")
     setStartDate(undefined)
     setEndDate(undefined)
+    setIsOpen(false)
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Trip</Button>
+        <Button className="w-full" variant="outline">Create Trip</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
