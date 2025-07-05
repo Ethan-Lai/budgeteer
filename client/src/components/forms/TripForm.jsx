@@ -42,8 +42,8 @@ export function TripForm() {
         const token = getToken()
         const response = await axios.post('/api/trips', {
             title: title,
-            start_date: startDate.toISOString().split('T')[0],
-            end_date: endDate.toISOString().split('T')[0]
+            start_date: startDate,
+            end_date: endDate
         }, 
         {
             // Need this for the backend, auth to know which user is using token and content for JSON format

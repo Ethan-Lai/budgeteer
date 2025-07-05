@@ -31,7 +31,15 @@ router.get('/', async (req, res) => {
             `SELECT * FROM trips WHERE user_id = $1`,
             [user_id]
         )
-        res.status(200).json({ trips: trips.rows })
+
+        // Otherwise, displays as yyyy-mm-ddT.......
+        const formattedTrips = trips.rows.map(trip => ({
+            ...trip,
+            start_date: trip.start_date.toISOString().split('T')[0],
+            end_date: trip.end_date.toISOString().split('T')[0]
+        }))
+
+        res.status(200).json({ trips: formattedTrips })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
