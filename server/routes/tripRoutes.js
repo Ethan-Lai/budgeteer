@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             [user_id, title, start_date, end_date]
         )
 
-        res.status(201).json({ newTrip })
+        res.status(201).json({ trip: newTrip.rows[0] })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

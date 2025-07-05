@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import DatePicker from "../DatePicker"
+import axios from "axios"
+import { getToken } from "@/services/authService"
 
 export function TripForm() {
   const [title, setTitle] = useState("")
@@ -23,31 +25,37 @@ export function TripForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    const tripData = {
-      title,
-      start_date: startDate,
-      end_date: endDate
-    }
-    
-    if (!tripData.start_date && !tripData.end_date) {
+    if (!startDate && !endDate) {
         setError("Both start and end dates are not valid dates!")
         return 
     }
-    if (!tripData.start_date) {
+    if (!startDate) {
         setError("Start Date is not a valid date!")
         return
     }
-    if (!tripData.end_date) {
+    if (!endDate) {
         setError("End Date is not a valid date!")
         return
     }
     
-    // TODO: Send to your API
-    // await fetch('/api/trips', { 
-    //   method: 'POST', 
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(tripData) 
-    // })
+    try {
+        const token = getToken()
+        const response = await axios.post('/api/trips', {
+            title: title,
+            start_date: startDate.toISOString().split('T')[0],
+            end_date: endDate.toISOString().split('T')[0]
+        }, 
+        {
+            // Need this for the backend, auth to know which user is using token and content for JSON format
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        console.log('Trip created', response.data)
+    } catch (err) {
+        console.log("Error ", err.message)
+    }
     
     // Reset form
     setTitle("")
