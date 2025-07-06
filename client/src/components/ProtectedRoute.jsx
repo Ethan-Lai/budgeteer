@@ -4,9 +4,9 @@ import { Navigate } from 'react-router-dom'
 
 const ProtectedRoute = ({ children }) => {
     const token = getToken()
-    console.log(token)
 
     if (!token) {
+        console.log('No token found - user needs to login');
         return <Navigate to="/" />
     }
 

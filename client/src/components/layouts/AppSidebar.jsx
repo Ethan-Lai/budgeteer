@@ -13,6 +13,7 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
+import TripForm from "../forms/CreateTripModal"
 
 // Menu items.
 const items = [
@@ -50,6 +51,9 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
                 <div className="flex flex-col h-full justify-between">
+                    <SidebarMenuItem>
+                        <TripForm />
+                    </SidebarMenuItem>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild>

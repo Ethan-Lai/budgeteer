@@ -37,6 +37,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
+// Login new user
 router.post('/login', async (req, res) => {
     try {
         // Receive data from FE
@@ -48,14 +49,14 @@ router.post('/login', async (req, res) => {
             [email]
         )
         if (existingUser.rows.length === 0) {
-            res.status(401).json({ error: 'Email does not exist' })
+            return res.status(401).json({ error: 'Email does not exist' })
         }
     
         // Compare passwords
         const hashedPassword = existingUser.rows[0].password
         const validPassword = await bcrypt.compare(password, hashedPassword)
         if (!validPassword) {
-            res.status(401).json({ error: 'Incorrect password' })
+            return res.status(401).json({ error: 'Incorrect password' })
         }
     
         // Send back success and token
@@ -65,8 +66,5 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ error: err.message })
     }
 })
-
-
-// Login new user
 
 export default router
