@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Trip from '@/Trip'
+import Trip from '@/components/TripCard'
 import axios from 'axios'
 import { getToken } from '@/services/authService'
 
