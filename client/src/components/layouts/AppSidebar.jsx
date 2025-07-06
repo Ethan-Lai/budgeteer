@@ -13,7 +13,7 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
-import TripForm from "../forms/TripForm"
+import TripForm from "../forms/CreateTripModal"
 
 // Menu items.
 const items = [
