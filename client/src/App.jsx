@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Settings from './pages/Settings'
 import Trips from './pages/Trips'
+import TripDetails from './pages/TripDetails'
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { AppLayout } from './components/layouts/AppLayout'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -21,6 +22,7 @@ function App() {
                         <Route path='dashboard' element={<Dashboard />} />
                         <Route path='settings' element={<Settings />} />
                         <Route path='trips' element={<Trips />} />
+                        <Route path='trips/:id' element={<TripDetails />} />
                     </Route>
                 </Routes>
             </div>

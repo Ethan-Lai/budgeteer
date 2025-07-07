@@ -6,7 +6,7 @@ import { getToken } from '@/services/authService'
 const TripForm = () => {
     const [trips, setTrips] = useState([])
 
-    const getTrip = async () => {
+    const getTrips = async () => {
         const token = getToken()
         
         // Set the header so the backend can grab for middleware
@@ -19,13 +19,13 @@ const TripForm = () => {
     }
 
     useEffect(() => {
-        getTrip()
-    }, [])
+        getTrips()
+    }, [trips])
 
     return (
         <div>
             {trips.map((trip, index) => 
-                <TripCard key={index} title={trip.title} start_date={trip.start_date} end_date={trip.end_date} />
+                <TripCard key={index} id={trip.id} title={trip.title} start_date={trip.start_date} end_date={trip.end_date} />
             )}
         </div>
     )

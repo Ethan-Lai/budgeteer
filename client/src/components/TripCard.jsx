@@ -10,11 +10,13 @@ import {
 import { Calendar, Clock } from "lucide-react"
 import { formatDate, getTripStatus, getTripDuration } from "@/lib/utils"
 import { Badge } from "./ui/badge"
+import { useNavigate } from "react-router-dom"
 
-const TripCard = ({ title, start_date, end_date }) => {
+const TripCard = ({ id, title, start_date, end_date }) => {
     const formattedDate = `${formatDate(start_date)} - ${formatDate(end_date)}`
     const tripStatus = getTripStatus(start_date, end_date)
     const tripDuration = getTripDuration(start_date, end_date)
+    const navigate = useNavigate()
 
     const badgeColor = tripStatus === "Upcoming" 
         ? "bg-blue-500 dark:bg-purple-600"
@@ -23,7 +25,10 @@ const TripCard = ({ title, start_date, end_date }) => {
         : ""
 
     return(
-        <Card className="p-5">
+        <Card 
+            className="p-5 cursor-pointer"
+            onClick={() => navigate(`/app/trips/${id}`)}    
+        >
             <div className="flex justify-between">
                 <CardTitle className="text-2xl">{title}</CardTitle>
                 <Badge 
