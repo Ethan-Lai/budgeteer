@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import axios from "axios";
-import PlanCard from "@/components/plans/PlanCard";
+import PlanCardExpanded from "@/components/plans/PlanCardExpanded";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PlanCardEdit from "@/components/plans/PlanCardEdit";
 
 const PlanDetails = () => {
     const { id } = useParams()
@@ -34,23 +35,6 @@ const PlanDetails = () => {
         getPlanDetails()
     }, [])
 
-    const handleDelete = async () => {
-        try {
-            const token = getToken()
-
-            await axios.delete(`/api/plans/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            console.log("Plan successfully deleted")
-            navigate('/app/plans')
-        } catch (err) {
-            console.log("Error deleting plan: ", err.message)
-        }
-    }
-
     return (
         <Tabs defaultValue="view">
             {/* Heading */}
@@ -75,10 +59,10 @@ const PlanDetails = () => {
             </div>
 
             <TabsContent value="view" className="pt-5">
-                <PlanCard title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} disabled={true} />
+                <PlanCardExpanded id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
             </TabsContent>
             <TabsContent value="edit">
-                <Button onClick={handleDelete}>Delete</Button>
+                <PlanCardEdit id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
             </TabsContent>
         </Tabs>
     )

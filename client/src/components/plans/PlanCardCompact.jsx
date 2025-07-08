@@ -12,7 +12,7 @@ import { formatDate, getPlanStatus, getPlanDuration } from "@/lib/utils"
 import { Badge } from "../ui/badge"
 import { useNavigate } from "react-router-dom"
 
-const PlanCard = ({ id, title, start_date, end_date, disabled=false }) => {
+const PlanCardCompact = ({ id, title, start_date, end_date }) => {
     const formattedDate = `${formatDate(start_date)} - ${formatDate(end_date)}`
     const planStatus = getPlanStatus(start_date, end_date)
     const planDuration = getPlanDuration(start_date, end_date)
@@ -26,8 +26,8 @@ const PlanCard = ({ id, title, start_date, end_date, disabled=false }) => {
 
     return(
         <Card 
-            className={`p-5 ${disabled ? "" : "cursor-pointer" }`}
-            onClick={disabled ? undefined : () => navigate(`/app/plans/${id}`)}    
+            className="p-5 cursor-pointer"
+            onClick={() => navigate(`/app/plans/${id}`)}    
         >
             <div className="flex justify-between">
                 <CardTitle className="text-2xl">{title}</CardTitle>
@@ -50,4 +50,4 @@ const PlanCard = ({ id, title, start_date, end_date, disabled=false }) => {
     )
 }
 
-export default PlanCard
+export default PlanCardCompact

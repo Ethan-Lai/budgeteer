@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PlanCard from '@/components/plans/PlanCard'
+import PlanCardCompact from '@/components/plans/PlanCardCompact'
 import axios from 'axios'
 import { getToken } from '@/services/authService'
 
@@ -25,7 +25,7 @@ const PlanForm = () => {
     return (
         <div>
             {plans.map((plan, index) => 
-                <PlanCard key={index} id={plan.id} title={plan.title} start_date={plan.start_date} end_date={plan.end_date} />
+                <PlanCardCompact key={index} id={plan.id} title={plan.title} start_date={plan.start_date} end_date={plan.end_date} />
             )}
         </div>
     )
