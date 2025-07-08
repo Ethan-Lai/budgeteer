@@ -6,6 +6,7 @@ import TripCard from "@/components/TripCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const TripDetails = () => {
     const { id } = useParams()
@@ -32,6 +33,23 @@ const TripDetails = () => {
     useEffect(() => {
         getTripDetails()
     }, [])
+
+    const handleDelete = async () => {
+        try {
+            const token = getToken()
+
+            await axios.delete(`/api/trips/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            console.log("Trip successfully deleted")
+            navigate('/app/trips')
+        } catch (err) {
+            console.log("Error deleting trip: ", err.message)
+        }
+    }
 
     return (
         <Tabs defaultValue="view">
@@ -60,7 +78,7 @@ const TripDetails = () => {
                 <TripCard title={tripDetails.title} start_date={tripDetails.start_date} end_date={tripDetails.end_date} disabled={true} />
             </TabsContent>
             <TabsContent value="edit">
-                <div>edit here</div>
+                <Button onClick={handleDelete}>Delete</Button>
             </TabsContent>
         </Tabs>
     )

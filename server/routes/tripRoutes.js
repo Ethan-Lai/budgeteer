@@ -3,7 +3,7 @@ import pool from "../db.js";
 
 const router = express.Router()
 
-// Create a trip
+// Create a trip 
 router.post('/', async (req, res) => {
     try {
         const { title, start_date, end_date } = req.body
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     }
 }) 
 
-// Get trips
+// Get all trips 
 router.get('/', async (req, res) => {
     try {
         const userId = req.user.id
@@ -64,6 +64,41 @@ router.get('/:id', async (req, res) => {
         // Later grab expenses for this trip as well
 
         return res.status(200).json({ trip: trip.rows[0] })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
+// Delete specific trip
+router.delete('/:id', async (req, res) => {
+    try {
+        const tripId = req.params.id
+        const userId = req.user.id
+
+        const trip = await pool.query(
+            `SELECT * FROM trips WHERE id = $1`,
+            [tripId]
+        )
+
+        // Trip not found
+        if (trip.rows.length === 0) {
+            return res.status(404).json({ message: "Trip not found" })
+        }
+
+        // User is trying to delete a trip they didn't create
+        if (trip.rows[0].user_id !== userId) {
+            return res.status(403).json({ message: "Access Denied" })
+        }
+
+        // Later delete all expense related to the trip
+
+        // If trip exists and associated with user, then delete
+        await pool.query(
+            `DELETE FROM trips WHERE id = $1`,
+            [tripId]
+        )
+
+        res.status(204).send()
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
