@@ -38,7 +38,10 @@ const TripDetails = () => {
             {/* Heading */}
             <div className="flex items-center justify-between -mx-5 px-5 pb-5 border-b-1">
                 <div className="flex items-center">              
-                    <button onClick={() => navigate('/app/trips')}>
+                    <button 
+                        className="cursor-pointer"
+                        onClick={() => navigate('/app/trips')}
+                    >
                         <ChevronLeft />
                         <span className="sr-only">Back button</span>
                     </button>
