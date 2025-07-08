@@ -1,4 +1,4 @@
-import PlanForm from '@/components/forms/PlanForm'
+import PlanForm from '@/components/plans/PlanForm'
 import React from 'react'
 
 const Plans = () => {

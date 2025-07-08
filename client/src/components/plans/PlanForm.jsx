@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PlanCard from '@/components/PlanCard'
+import PlanCard from '@/components/plans/PlanCard'
 import axios from 'axios'
 import { getToken } from '@/services/authService'
 

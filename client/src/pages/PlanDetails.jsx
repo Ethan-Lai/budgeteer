@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import axios from "axios";
-import PlanCard from "@/components/PlanCard";
+import PlanCard from "@/components/plans/PlanCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";

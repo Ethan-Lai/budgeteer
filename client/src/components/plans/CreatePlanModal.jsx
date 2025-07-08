@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import DatePicker from "../DatePicker"
+import DatePicker from "../ui/DatePicker"
 import axios from "axios"
 import { getToken } from "@/services/authService"
+import { useNavigate } from "react-router-dom"
 
 export function CreatePlanModal() {
   const [title, setTitle] = useState("")
@@ -22,6 +23,7 @@ export function CreatePlanModal() {
   const [endDate, setEndDate] = useState()
   const [error, setError] = useState("")
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -54,6 +56,7 @@ export function CreatePlanModal() {
             }
         })
         console.log('Plan created', response.data)
+        navigate(`/app/plans/${response.data.plan.id}`)
     } catch (err) {
         console.log("Error ", err.message)
     }

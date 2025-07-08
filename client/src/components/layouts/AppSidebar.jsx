@@ -13,7 +13,7 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
-import PlanForm from "../forms/CreatePlanModal"
+import PlanForm from "../plans/CreatePlanModal"
 
 // Menu items.
 const items = [

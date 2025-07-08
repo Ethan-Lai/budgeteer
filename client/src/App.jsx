@@ -7,7 +7,7 @@ import Plans from './pages/Plans'
 import PlanDetails from './pages/PlanDetails'
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { AppLayout } from './components/layouts/AppLayout'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 function App() {
     return (

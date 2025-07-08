@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Calendar, Clock } from "lucide-react"
 import { formatDate, getPlanStatus, getPlanDuration } from "@/lib/utils"
-import { Badge } from "./ui/badge"
+import { Badge } from "../ui/badge"
 import { useNavigate } from "react-router-dom"
 
 const PlanCard = ({ id, title, start_date, end_date, disabled=false }) => {
