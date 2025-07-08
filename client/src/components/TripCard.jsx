@@ -12,7 +12,7 @@ import { formatDate, getTripStatus, getTripDuration } from "@/lib/utils"
 import { Badge } from "./ui/badge"
 import { useNavigate } from "react-router-dom"
 
-const TripCard = ({ id, title, start_date, end_date }) => {
+const TripCard = ({ id, title, start_date, end_date, disabled=false }) => {
     const formattedDate = `${formatDate(start_date)} - ${formatDate(end_date)}`
     const tripStatus = getTripStatus(start_date, end_date)
     const tripDuration = getTripDuration(start_date, end_date)
@@ -26,8 +26,8 @@ const TripCard = ({ id, title, start_date, end_date }) => {
 
     return(
         <Card 
-            className="p-5 cursor-pointer"
-            onClick={() => navigate(`/app/trips/${id}`)}    
+            className={`p-5 ${disabled ? "" : "cursor-pointer" }`}
+            onClick={disabled ? undefined : () => navigate(`/app/trips/${id}`)}    
         >
             <div className="flex justify-between">
                 <CardTitle className="text-2xl">{title}</CardTitle>
