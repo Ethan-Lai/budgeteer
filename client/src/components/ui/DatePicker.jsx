@@ -1,6 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CalendarIcon } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
@@ -15,6 +14,12 @@ export function DatePicker({ date, onDateChange, placeholder = "Select date...",
   const [open, setOpen] = useState(false)
   const [month, setMonth] = useState(date || new Date())
   const [value, setValue] = useState(formatDate(date))
+
+  // This was added since PlanCardEdit wouldn't load the dates
+  // This allows us to see the actual dates instead of just "select date..."
+  useEffect(() => {
+    setValue(formatDate(date))
+  }, [date])
 
   return (
     <div className="flex flex-col gap-3">
