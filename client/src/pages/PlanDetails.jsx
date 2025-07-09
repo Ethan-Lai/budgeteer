@@ -71,7 +71,7 @@ const PlanDetails = () => {
             </TabsContent>
             <TabsContent value="edit" className="pt-5">
                 <Card className="p-5">
-                    <PlanCardEdit id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
+                    <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
                 </Card>
             </TabsContent>
         </Tabs>

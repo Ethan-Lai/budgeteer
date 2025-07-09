@@ -7,7 +7,7 @@ import DatePicker from "../ui/DatePicker";
 import { formatDate } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
-const PlanCardEdit = ({ id, title, start_date, end_date }) => {
+const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date }) => {
     const navigate = useNavigate()
 
     const handleDelete = async () => {
@@ -28,38 +28,45 @@ const PlanCardEdit = ({ id, title, start_date, end_date }) => {
     }
 
     return (
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4">
             <div className="grid gap-3">
-                <Label htmlFor="title">Title</Label>
+                <Label htmlFor="title" className="text-md">Title</Label>
                 <Input 
                     id="title" 
                     defaultValue={title}
                     required={true}
+                    className="md:text-md "
+                    disabled={!isEditing}
                 />
             </div>
 
             <div className="grid gap-3">
-                <Label>Start Date</Label>
+                <Label className="text-md">Start Date</Label>
                 <DatePicker 
                     date={formatDate(start_date)}
                     required={true}
+                    className="md:text-md"
+                    disabled={!isEditing}
                 />
             </div>
 
             <div className="grid gap-3">
-                <Label>End Date</Label>
+                <Label className="text-md">End Date</Label>
                 <DatePicker 
                     date={formatDate(end_date)}
-                    value={formatDate(end_date)}
                     required={true}
+                    className="md:text-md"
+                    disabled={!isEditing}
                 />
             </div>
 
-            <div>
-                <Button onClick={handleDelete}>Delete</Button>
-                <Button>Save</Button>
-                <Button>Cancel</Button>
-            </div>
+            {isEditing && (
+                <div>
+                    <Button onClick={handleDelete}>Delete</Button>
+                    <Button onClick={() => console.log(isEditing)}>Save</Button>
+                    <Button>Cancel</Button>
+                </div>
+            )}
         </div>
     )
 }
