@@ -40,6 +40,11 @@ export function CreatePlanModal() {
         setError("End Date is not a valid date!")
         return
     }
+
+    if (endDate < startDate) {
+        setError("End date cannot be before start date!")
+        return
+    }
     
     try {
         const token = getToken()

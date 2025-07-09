@@ -18,8 +18,11 @@ import { loginUser } from "@/services/authService"
 const LoginForm = () => {
     const navigate = useNavigate()
 
-    const handleLogin = async (formData) => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
         const data = Object.fromEntries(formData)
+
         try {
             await loginUser(data)
             navigate('/app/dashboard')
@@ -34,7 +37,7 @@ const LoginForm = () => {
                 <CardTitle>Sign in</CardTitle>
             </CardHeader>
             <CardContent>
-                <form action={handleLogin}>
+                <form onSubmit={handleLogin}>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="email" type="email" required />
                     <br />

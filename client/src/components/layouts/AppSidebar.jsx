@@ -14,6 +14,7 @@ import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 import PlanForm from "../plans/CreatePlanModal"
+import { logoutUser } from "@/services/authService"
 
 // Menu items.
 const items = [
@@ -38,9 +39,13 @@ export function AppSidebar() {
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        localStorage.removeItem('token')
-        delete axios.defaults.headers.common['Authorization']
-        navigate('/')
+        try {
+            logoutUser()
+            console.log('User has been logged out')
+            navigate('/')
+        } catch (err) {
+            console.log("Error: ", err.message)
+        }
     }
 
   return (
