@@ -25,7 +25,7 @@ const PlanForm = () => {
     return (
         <div>
             {plans.map((plan, index) => 
-                <PlanCardCompact key={index} id={plan.id} title={plan.title} start_date={plan.start_date} end_date={plan.end_date} />
+                <PlanCardCompact variant="compact" key={index} id={plan.id} title={plan.title} start_date={plan.start_date} end_date={plan.end_date} />
             )}
         </div>
     )

@@ -3,10 +3,18 @@ import { useParams } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import axios from "axios";
 import PlanCardExpanded from "@/components/plans/PlanCardExpanded";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import PlanCardEdit from "@/components/plans/PlanCardEdit";
 
 const PlanDetails = () => {
@@ -61,8 +69,10 @@ const PlanDetails = () => {
             <TabsContent value="view" className="pt-5">
                 <PlanCardExpanded id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
             </TabsContent>
-            <TabsContent value="edit">
-                <PlanCardEdit id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
+            <TabsContent value="edit" className="pt-5">
+                <Card className="p-5">
+                    <PlanCardEdit id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
+                </Card>
             </TabsContent>
         </Tabs>
     )
