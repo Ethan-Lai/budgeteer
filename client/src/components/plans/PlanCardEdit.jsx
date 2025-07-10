@@ -1,5 +1,3 @@
-import { getToken } from "@/services/authService";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -7,12 +5,14 @@ import DatePicker from "../ui/DatePicker";
 import { formatDate } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { deletePlan, updatePlan } from "@/services/planService";
 
 const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSaveSuccess }) => {
     const navigate = useNavigate()
+    const [error, setError] = useState("")
     const [editTitle, setEditTitle] = useState("")
-    const [editStartDate, setEditStartDate] = useState("")
-    const [editEndDate, setEditEndDate] = useState("")
+    const [editStartDate, setEditStartDate] = useState()
+    const [editEndDate, setEditEndDate] = useState()
 
     // NOTE: Do this instead of directly loading into state since we are waiting on async data
     //       Thus, need to display once the info has been passed down properly
@@ -24,15 +24,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
 
     const handleDelete = async () => {
         try {
-            const token = getToken()
-
-            await axios.delete(`/api/plans/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            console.log("Plan successfully deleted")
+            await deletePlan(id)
             navigate('/app/plans')
         } catch (err) {
             console.log("Error deleting plan: ", err.message)
@@ -42,32 +34,55 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
     const handleSave = async (e) => {
         e.preventDefault()
         
+        if (!editStartDate && !editEndDate) {
+            setError("Both start and end dates are not valid dates!")
+            return 
+        }
+        if (!editStartDate) {
+            setError("Start Date is not a valid date!")
+            return
+        }
+        if (!editEndDate) {
+            setError("End Date is not a valid date!")
+            return
+        }
+
+        // Cant compare dates as strings, must turn to objects
+        const startDateObj = new Date(editStartDate)
+        const endDateObj = new Date(editEndDate)
+
+        if (endDateObj < startDateObj) {
+            setError("End date cannot be before start date!")
+            return
+        }
+    
         try {
-            const token = getToken()
-            const response = await axios.put(`/api/plans/${id}`, {
+            const planData = {
                 title: editTitle,
                 start_date: editStartDate,
                 end_date: editEndDate
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+            }
+            const updatedPlan = await updatePlan(id, planData)
 
             if (onSaveSuccess) {
-                onSaveSuccess(response.data.editedPlan)
+                onSaveSuccess(updatedPlan)
             }
-            console.log("Plan edited successfully", response.data)
         } catch (err) {
             console.log("Error: ", err)
         }
+
+        setError("")
     }
 
     return (
         <form onSubmit={handleSave}>
             <div className="grid gap-4">
+                {error && 
+                    <span className="text-red-500">
+                        {error}
+                    </span>
+                }
+
                 <div className="grid gap-3">
                     <Label htmlFor="title" className="text-md">Title</Label>
                     <Input 

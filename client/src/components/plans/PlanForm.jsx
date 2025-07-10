@@ -1,26 +1,22 @@
 import { useState, useEffect } from 'react'
 import PlanCardCompact from '@/components/plans/PlanCardCompact'
-import axios from 'axios'
-import { getToken } from '@/services/authService'
+import { getPlans } from '@/services/planService'
 
 const PlanForm = () => {
     const [plans, setPlans] = useState([])
 
-    const getPlans = async () => {
-        const token = getToken()
-        
-        // Set the header so the backend can grab for middleware
-        const response = await axios.get("/api/plans", {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        setPlans(response.data.plans)
+    const fetchPlans = async () => {
+        try {
+            const plansData = await getPlans()
+            setPlans(plansData)
+        } catch (err) {
+            console.log('Error: ', err.message)
+        }
     }
 
     useEffect(() => {
-        getPlans()
-    }, [plans])
+        fetchPlans()
+    }, [])
 
     return (
         <div>

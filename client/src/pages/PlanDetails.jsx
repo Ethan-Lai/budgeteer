@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import PlanCardEdit from "@/components/plans/PlanCardEdit";
+import { getPlan } from "@/services/planService";
 
 const PlanDetails = () => {
     const { id } = useParams()
@@ -28,15 +29,8 @@ const PlanDetails = () => {
 
     const getPlanDetails = async () => {
         try {
-            const token = getToken()
-    
-            const response = await axios.get(`/api/plans/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-    
-            setPlanDetails(response.data.plan)
+            const plan = await getPlan(id)
+            setPlanDetails(plan)
         } catch (err) {
             console.log("Access Denied")
             navigate('/app/plans')
@@ -45,7 +39,7 @@ const PlanDetails = () => {
 
     useEffect(() => {
         getPlanDetails()
-    }, [])
+    }, [id])
 
     return (
         <Tabs defaultValue="view">
