@@ -22,6 +22,10 @@ const PlanDetails = () => {
     const [planDetails, setPlanDetails] = useState([])
     const navigate = useNavigate()
 
+    const handleSaveSuccess = (updatedPlan) => {
+        setPlanDetails(updatedPlan)
+    }
+
     const getPlanDetails = async () => {
         try {
             const token = getToken()
@@ -71,7 +75,7 @@ const PlanDetails = () => {
             </TabsContent>
             <TabsContent value="edit" className="pt-5">
                 <Card className="p-5">
-                    <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
+                    <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} onSaveSuccess={handleSaveSuccess} />
                 </Card>
             </TabsContent>
         </Tabs>
