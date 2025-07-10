@@ -1,5 +1,3 @@
-import { getToken } from "@/services/authService";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -7,6 +5,7 @@ import DatePicker from "../ui/DatePicker";
 import { formatDate } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { deletePlan, updatePlan } from "@/services/planService";
 
 const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSaveSuccess }) => {
     const navigate = useNavigate()
@@ -24,15 +23,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
 
     const handleDelete = async () => {
         try {
-            const token = getToken()
-
-            await axios.delete(`/api/plans/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            console.log("Plan successfully deleted")
+            await deletePlan(id)
             navigate('/app/plans')
         } catch (err) {
             console.log("Error deleting plan: ", err.message)
@@ -43,23 +34,16 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
         e.preventDefault()
         
         try {
-            const token = getToken()
-            const response = await axios.put(`/api/plans/${id}`, {
+            const planData = {
                 title: editTitle,
                 start_date: editStartDate,
                 end_date: editEndDate
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+            }
+            const updatedPlan = await updatePlan(id, planData)
 
             if (onSaveSuccess) {
-                onSaveSuccess(response.data.editedPlan)
+                onSaveSuccess(updatedPlan)
             }
-            console.log("Plan edited successfully", response.data)
         } catch (err) {
             console.log("Error: ", err)
         }

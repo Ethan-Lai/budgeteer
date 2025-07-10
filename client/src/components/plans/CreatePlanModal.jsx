@@ -13,9 +13,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import DatePicker from "../ui/DatePicker"
-import axios from "axios"
-import { getToken } from "@/services/authService"
 import { useNavigate } from "react-router-dom"
+import { createPlan } from "@/services/planService"
 
 export function CreatePlanModal() {
   const [title, setTitle] = useState("")
@@ -47,21 +46,14 @@ export function CreatePlanModal() {
     }
     
     try {
-        const token = getToken()
-        const response = await axios.post('/api/plans', {
+        const planData = {
             title: title,
             start_date: startDate,
             end_date: endDate
-        }, 
-        {
-            // Need this for the backend, auth to know which user is using token and content for JSON format
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        })
-        console.log('Plan created', response.data)
-        navigate(`/app/plans/${response.data.plan.id}`)
+        }
+        const newPlan = await createPlan(planData)
+        navigate()
+        navigate(`/app/plans/${newPlan.id}`)
     } catch (err) {
         console.log("Error ", err.message)
     }
