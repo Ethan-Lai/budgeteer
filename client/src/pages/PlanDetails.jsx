@@ -39,7 +39,7 @@ const PlanDetails = () => {
 
     useEffect(() => {
         getPlanDetails()
-    }, [])
+    }, [id])
 
     return (
         <Tabs defaultValue="view">
