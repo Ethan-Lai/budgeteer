@@ -103,10 +103,9 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
                 </div>
 
                 {isEditing && (
-                    <div>
-                        <Button type="button" onClick={handleDelete}>Delete</Button>
+                    <div className="flex justify-end gap-3">
                         <Button type="submit">Save</Button>
-                        <Button type="button">Cancel</Button>
+                        <Button className="bg-red-600" type="button" onClick={handleDelete}>Delete</Button>
                     </div>
                 )}
             </div>
