@@ -1,10 +1,9 @@
 import React from 'react'
-import DashboardForm from '@/components/forms/DashboardForm'
 
 const Dashboard = () => {
-    return (
-        <DashboardForm />
-    )
+  return (
+    <div>Dashboard</div>
+  )
 }
 
 export default Dashboard

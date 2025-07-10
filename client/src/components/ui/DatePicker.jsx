@@ -1,6 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CalendarIcon } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
@@ -11,10 +10,16 @@ import {
 } from "@/components/ui/popover"
 import { formatDate, isValidDate } from "@/lib/utils"
 
-export function DatePicker({ date, onDateChange, placeholder = "Select date...", required }) {
+export function DatePicker({ date, onDateChange, placeholder = "Select date...", required, className="", disabled=false }) {
   const [open, setOpen] = useState(false)
   const [month, setMonth] = useState(date || new Date())
   const [value, setValue] = useState(formatDate(date))
+
+  // This was added since PlanCardEdit wouldn't load the dates
+  // This allows us to see the actual dates instead of just "select date..."
+  useEffect(() => {
+    setValue(formatDate(date))
+  }, [date])
 
   return (
     <div className="flex flex-col gap-3">
@@ -22,7 +27,7 @@ export function DatePicker({ date, onDateChange, placeholder = "Select date...",
         <Input
           value={value}
           placeholder={placeholder}
-          className="bg-background pr-10"
+          className={`bg-background pr-10 ${className}`}
           onChange={(e) => {
             const newDate = new Date(e.target.value)
             setValue(e.target.value)
@@ -38,6 +43,7 @@ export function DatePicker({ date, onDateChange, placeholder = "Select date...",
             }
           }}
           required={required}
+          disabled={disabled}
         />
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -66,6 +72,7 @@ export function DatePicker({ date, onDateChange, placeholder = "Select date...",
                 setValue(formatDate(selectedDate))
                 setOpen(false)
               }}
+              disabled={disabled}
             />
           </PopoverContent>
         </Popover>

@@ -29,7 +29,7 @@ export function isValidDate(date) {
   return !isNaN(date.getTime())
 }
 
-export function getTripStatus(startDate, endDate) {
+export function getPlanStatus(startDate, endDate) {
   if (!startDate || !endDate) {
     return "unknown"
   }
@@ -57,7 +57,7 @@ export function getTripStatus(startDate, endDate) {
   }
 }
 
-export function getTripDuration(startDate, endDate) {
+export function getPlanDuration(startDate, endDate) {
   if (!startDate || !endDate) {
     return "unknown duration"
   }

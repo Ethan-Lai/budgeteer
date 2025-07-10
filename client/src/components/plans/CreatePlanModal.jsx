@@ -12,16 +12,18 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import DatePicker from "../DatePicker"
+import DatePicker from "../ui/DatePicker"
 import axios from "axios"
 import { getToken } from "@/services/authService"
+import { useNavigate } from "react-router-dom"
 
-export function CreateTripModal() {
+export function CreatePlanModal() {
   const [title, setTitle] = useState("")
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
   const [error, setError] = useState("")
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,10 +40,15 @@ export function CreateTripModal() {
         setError("End Date is not a valid date!")
         return
     }
+
+    if (endDate < startDate) {
+        setError("End date cannot be before start date!")
+        return
+    }
     
     try {
         const token = getToken()
-        const response = await axios.post('/api/trips', {
+        const response = await axios.post('/api/plans', {
             title: title,
             start_date: startDate,
             end_date: endDate
@@ -53,7 +60,8 @@ export function CreateTripModal() {
                 'Content-Type': 'application/json'
             }
         })
-        console.log('Trip created', response.data)
+        console.log('Plan created', response.data)
+        navigate(`/app/plans/${response.data.plan.id}`)
     } catch (err) {
         console.log("Error ", err.message)
     }
@@ -69,14 +77,14 @@ export function CreateTripModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full" variant="outline">Create Trip</Button>
+        <Button className="w-full" variant="outline">Create Plan</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Create a Trip</DialogTitle>
+            <DialogTitle>Create a Plan</DialogTitle>
             <DialogDescription>
-              Create a new trip with dates and title.
+              Create a new plan with dates and title.
             </DialogDescription>
             {error && 
                 <DialogDescription className="text-red-500">
@@ -91,7 +99,7 @@ export function CreateTripModal() {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Sweden Trip" 
+                placeholder="Sweden Plan" 
                 required
               />
             </div>
@@ -118,7 +126,7 @@ export function CreateTripModal() {
             <DialogClose asChild>
               <Button variant="outline" type="button">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Create Trip</Button>
+            <Button type="submit">Create Plan</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -126,4 +134,4 @@ export function CreateTripModal() {
   )
 }
 
-export default CreateTripModal
+export default CreatePlanModal

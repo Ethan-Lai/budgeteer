@@ -13,7 +13,8 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
-import TripForm from "../forms/CreateTripModal"
+import PlanForm from "../plans/CreatePlanModal"
+import { logoutUser } from "@/services/authService"
 
 // Menu items.
 const items = [
@@ -23,8 +24,8 @@ const items = [
     icon: Home,
   },
   {
-    title: "Trips",
-    url: "/app/trips",
+    title: "Plans",
+    url: "/app/plans",
     icon: Calendar,
   },
   {
@@ -38,9 +39,13 @@ export function AppSidebar() {
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        localStorage.removeItem('token')
-        delete axios.defaults.headers.common['Authorization']
-        navigate('/')
+        try {
+            logoutUser()
+            console.log('User has been logged out')
+            navigate('/')
+        } catch (err) {
+            console.log("Error: ", err.message)
+        }
     }
 
   return (
@@ -52,7 +57,7 @@ export function AppSidebar() {
             <SidebarMenu>
                 <div className="flex flex-col h-full justify-between">
                     <SidebarMenuItem>
-                        <TripForm />
+                        <PlanForm />
                     </SidebarMenuItem>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>

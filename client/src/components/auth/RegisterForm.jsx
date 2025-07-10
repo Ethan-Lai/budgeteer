@@ -17,8 +17,11 @@ import { registerUser } from "@/services/authService"
 const Register = () => {
     const navigate = useNavigate()
     
-    const handleRegister = async (formData) => {
+    const handleRegister = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
         const data = Object.fromEntries(formData)
+
         try {
             await registerUser(data)
             navigate('/app/dashboard')

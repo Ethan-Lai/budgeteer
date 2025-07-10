@@ -8,7 +8,6 @@ export function AppLayout() {
             <div className="flex h-screen w-full">
                 <AppSidebar />
                 <main className="flex-1 overflow-auto p-5">
-                    <SidebarTrigger />
                     {/* Outlet renders the current route we're on */}
                     <Outlet />
                 </main>
