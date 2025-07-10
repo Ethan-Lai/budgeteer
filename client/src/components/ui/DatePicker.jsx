@@ -28,14 +28,20 @@ export function DatePicker({ date, onDateChange, placeholder = "Select date...",
           value={value}
           placeholder={placeholder}
           className={`bg-background pr-10 ${className}`}
-          onChange={(e) => {
-            const newDate = new Date(e.target.value)
-            setValue(e.target.value)
-            if (isValidDate(newDate)) {
-              onDateChange(newDate) // Send date back to parent
-              setMonth(newDate)
-            }
-          }}
+            onChange={(e) => {
+                setValue(e.target.value) // Just update the display value as user types
+            }}
+            // Added onBlur since input messes up while typing date
+            onBlur={(e) => {
+                const newDate = new Date(e.target.value)
+                if (isValidDate(newDate)) {
+                    onDateChange(newDate) // Send date back to parent
+                    setMonth(newDate)
+                } else {
+                    // Reset to original value if invalid
+                    setValue(formatDate(date))
+                }
+            }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
               e.preventDefault()

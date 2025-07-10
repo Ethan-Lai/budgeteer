@@ -35,8 +35,8 @@ router.get('/', async (req, res) => {
         // Otherwise, displays as yyyy-mm-ddT.......
         const formattedPlans = plans.rows.map(plan => ({
             ...plan,
-            start_date: plan.start_date.toISOString().split('T')[0],
-            end_date: plan.end_date.toISOString().split('T')[0]
+            start_date: plan.start_date.toISOString(),
+            end_date: plan.end_date.toISOString()
         }))
 
         res.status(200).json({ plans: formattedPlans })
