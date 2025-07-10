@@ -13,7 +13,6 @@ import { Badge } from "../ui/badge"
 import { useNavigate } from "react-router-dom"
 
 const PlanCardCompact = ({ variant, id, title, start_date, end_date }) => {
-    console.log(start_date)
     const formattedDate = `${formatDate(start_date)} - ${formatDate(end_date)}`
     const planStatus = getPlanStatus(start_date, end_date)
     const planDuration = getPlanDuration(start_date, end_date)
