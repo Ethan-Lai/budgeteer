@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { deletePlan, updatePlan } from "@/services/planService";
+import ConfirmationModal from "../ui/ConfirmationModal";
 
 const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSaveSuccess }) => {
     const navigate = useNavigate()
@@ -13,6 +14,8 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
     const [editTitle, setEditTitle] = useState("")
     const [editStartDate, setEditStartDate] = useState()
     const [editEndDate, setEditEndDate] = useState()
+    const [showSaveModal, setShowSaveModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     // NOTE: Do this instead of directly loading into state since we are waiting on async data
     //       Thus, need to display once the info has been passed down properly
@@ -31,9 +34,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
         }
     }
 
-    const handleSave = async (e) => {
-        e.preventDefault()
-        
+    const handleSave = async () => {
         if (!editStartDate && !editEndDate) {
             setError("Both start and end dates are not valid dates!")
             return 
@@ -92,7 +93,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
                         required={true}
                         className="md:text-md"
                         disabled={!isEditing}
-                        />
+                    />
                 </div>
 
                 <div className="grid gap-3">
@@ -103,7 +104,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
                         required={true}
                         className="md:text-md"
                         disabled={!isEditing}
-                        />
+                    />
                 </div>
 
                 <div className="grid gap-3">
@@ -114,13 +115,13 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
                         required={true}
                         className="md:text-md"
                         disabled={!isEditing}
-                        />
+                    />
                 </div>
 
                 {isEditing && (
                     <div className="flex justify-end gap-3">
-                        <Button type="submit">Save</Button>
-                        <Button className="bg-red-600" type="button" onClick={handleDelete}>Delete</Button>
+                        <ConfirmationModal type="Save" handleFunction={handleSave} />
+                        <ConfirmationModal type="Delete" handleFunction={handleDelete} className="bg-red-600" />
                     </div>
                 )}
             </div>
