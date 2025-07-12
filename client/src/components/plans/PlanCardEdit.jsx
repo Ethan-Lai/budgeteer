@@ -14,8 +14,6 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
     const [editTitle, setEditTitle] = useState("")
     const [editStartDate, setEditStartDate] = useState()
     const [editEndDate, setEditEndDate] = useState()
-    const [showSaveModal, setShowSaveModal] = useState(false)
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     // NOTE: Do this instead of directly loading into state since we are waiting on async data
     //       Thus, need to display once the info has been passed down properly
@@ -120,7 +118,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
 
                 {isEditing && (
                     <div className="flex justify-end gap-3">
-                        <ConfirmationModal type="Save" handleFunction={handleSave} />
+                        <Button onClick={handleSave}>Save</Button>
                         <ConfirmationModal type="Delete" handleFunction={handleDelete} className="bg-red-600" />
                     </div>
                 )}
