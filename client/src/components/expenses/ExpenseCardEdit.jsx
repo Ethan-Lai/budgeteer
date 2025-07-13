@@ -3,13 +3,10 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import DatePicker from "../ui/DatePicker";
 import { formatDate } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deletePlan, updatePlan } from "@/services/planService";
-import ConfirmationModal from "../ui/ConfirmationModal";
+import { updateExpense } from "@/services/expenseService";
 
-const ExpenseCardEdit = ({ isEditing=false, amount, category, date, description, onSaveSuccess }) => {
-    const navigate = useNavigate()
+const ExpenseCardEdit = ({ id, planId, amount, category, date, description, onSaveSuccess }) => {
     const [editAmount, setEditAmount] = useState()
     const [editCategory, setEditCategory] = useState("")
     const [editDescription, setEditDescription] = useState("")
@@ -29,7 +26,7 @@ const ExpenseCardEdit = ({ isEditing=false, amount, category, date, description,
     const handleSave = async (e) => {
         e.preventDefault()
 
-        if (!date) {
+        if (!editDate) {
             setError("Date is not a valid date!")
             return
         }
@@ -41,10 +38,10 @@ const ExpenseCardEdit = ({ isEditing=false, amount, category, date, description,
                 description: editDescription,
                 date: editDate
             }
-            const updatedExpense = await updateExpense(id, expenseData)
+            const updatedExpense = await updateExpense(planId, id, expenseData)
 
             if (onSaveSuccess) {
-                onSaveSuccess(updatedExpense)
+                onSaveSuccess()
             }
         } catch (err) {
             console.log("Error: ", err)
@@ -119,11 +116,9 @@ const ExpenseCardEdit = ({ isEditing=false, amount, category, date, description,
                     />
                 </div>
 
-                {isEditing && (
-                    <div className="flex justify-end gap-3">
-                        <Button type="submit">Save</Button>
-                    </div>
-                )}
+                <div className="flex justify-end gap-3">
+                    <Button type="submit">Save</Button>
+                </div>
             </div>
         </form>
     )

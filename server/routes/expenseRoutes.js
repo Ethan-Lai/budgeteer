@@ -23,6 +23,43 @@ router.post('/', async (req, res) => {
     }
 })
 
+// Edit specific expense
+router.put('/:expenseId', async (req, res) => {
+    try {
+        const { amount, category, description, date } = req.body
+        const user_id = req.user.id
+        const plan_id = req.params.id
+        const expense_id = req.params.expenseId
+
+        const expense = await pool.query(
+            `SELECT * FROM expenses WHERE id = $1`,
+            [expense_id]
+        )
+
+        // Expense doesn't exist
+        if (expense.rows.length === 0) {
+            return res.status(404).json({ error: "Expense not found" })
+        }
+
+        // User trying to access another user's expense
+        if (expense.rows[0].user_id !== user_id) {
+            return res.status(403).json({ error: "Access Denied" })
+        }
+
+        // They can edit
+        const editedExpense = await pool.query(
+            `UPDATE expenses SET amount = $1, category = $2, description = $3, date = $4
+            WHERE id = $5 AND user_id = $6 AND plan_id = $7
+            RETURNING *`,
+            [amount, category, description, date, expense_id, user_id, plan_id]
+        )
+
+        res.status(200).json({ editedExpense: editedExpense.rows[0] })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
 // Get all expenses for specific plan
 router.get('/', async (req, res) => {
     try {

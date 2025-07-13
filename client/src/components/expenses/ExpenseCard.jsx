@@ -8,14 +8,18 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "../ui/badge"
+import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
 import { Label } from "../ui/label"
 import { PenLine } from "lucide-react"
 import { deleteExpense } from "@/services/expenseService"
 import ConfirmationModal from "../ui/ConfirmationModal"
 import ExpenseCardEdit from "./ExpenseCardEdit"
+import { useState } from "react"
 
-const ExpenseCard = ({ isEditing, id, planId, amount, category, description, date, onExpenseChange }) => {
+const ExpenseCard = ({ id, planId, amount, category, description, date, onExpenseChange }) => {
+    const [isEditing, setIsEditing] = useState(false)
+
     const handleDelete = async () => {
         try {
             await deleteExpense(planId, id)
@@ -23,6 +27,11 @@ const ExpenseCard = ({ isEditing, id, planId, amount, category, description, dat
         } catch (err) {
             console.log("Error: ", err.message)
         }
+    }
+
+    const handleSaveSuccess = () => {
+        setIsEditing(false) // Exit edit mode
+        onExpenseChange() // Refresh the list
     }
 
     return (
@@ -37,11 +46,36 @@ const ExpenseCard = ({ isEditing, id, planId, amount, category, description, dat
                 </div>
                 <div className="flex items-center gap-3">
                     <CardTitle className="text-xl">${amount}</CardTitle>
-                    <PenLine className="text-blue-400"/>
-                    <ConfirmationModal type="Delete" handleFunction={handleDelete} className="text-red-400" iconOnly={true} />
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => setIsEditing(!isEditing)}
+                    >
+                        <PenLine className="size-6 text-blue-400" />
+                        <span className="sr-only">Edit Button</span>
+                    </Button>
+                    <ConfirmationModal 
+                        type="Delete" 
+                        handleFunction={handleDelete} 
+                        className="text-red-400" 
+                        iconOnly={true} 
+                    />
                 </div>
             </div>
-            <ExpenseCardEdit isEditing={true} amount={amount} category={category} date={date} description={description} onSaveSuccess={(items) => console.log(items)} />
+            
+            {/* Only show edit form when in edit mode */}
+            {isEditing && (
+                <ExpenseCardEdit 
+                    isEditing={true} 
+                    id={id} 
+                    planId={planId} 
+                    amount={amount} 
+                    category={category} 
+                    date={date} 
+                    description={description} 
+                    onSaveSuccess={handleSaveSuccess} 
+                />
+            )}
         </Card>
     )
 }

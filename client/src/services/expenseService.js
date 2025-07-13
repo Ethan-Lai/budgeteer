@@ -35,6 +35,20 @@ export const deleteExpense = async (planId, expenseId) => {
             'Authorization': `Bearer ${token}`
         }
     })
-    
+
     console.log("Expense successfully deleted")
+}
+
+export const updateExpense = async (planId, expenseId, expenseData) => {
+    const token = getToken()
+
+    const response = await axios.put(`/api/plans/${planId}/expenses/${expenseId}`, expenseData, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+
+    console.log("Expense successfully updated")
+    return response.data.editedExpense
 }

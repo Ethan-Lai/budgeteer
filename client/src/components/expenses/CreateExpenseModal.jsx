@@ -130,7 +130,7 @@ export function CreateExpenseModal({ planId, onAddSuccess }) {
             <DialogClose asChild>
               <Button variant="outline" type="button">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Create Plan</Button>
+            <Button type="submit">Add Expense</Button>
           </DialogFooter>
         </form>
       </DialogContent>
