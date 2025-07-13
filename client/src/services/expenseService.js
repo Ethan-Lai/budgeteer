@@ -26,3 +26,15 @@ export const createExpense = async(planId, expenseData) => {
 
     return response.data.expense
 }
+
+export const deleteExpense = async (planId, expenseId) => {
+    const token = getToken()
+
+    await axios.delete(`/api/plans/${planId}/expenses/${expenseId}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    
+    console.log("Expense successfully deleted")
+}

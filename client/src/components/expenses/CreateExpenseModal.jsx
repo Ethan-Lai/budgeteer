@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import DatePicker from "../ui/DatePicker"
 import { createExpense } from "@/services/expenseService"
 
-export function CreateExpenseModal({ planId }) {
+export function CreateExpenseModal({ planId, onAddSuccess }) {
   const [amount, setAmount] = useState()
   const [category, setCategory] = useState("")
   const [description, setDescription] = useState("")
@@ -39,6 +39,7 @@ export function CreateExpenseModal({ planId }) {
             date: date
         }
         await createExpense(planId, expenseData)
+        onAddSuccess()
     } catch (err) {
         console.log("Error ", err.message)
     }

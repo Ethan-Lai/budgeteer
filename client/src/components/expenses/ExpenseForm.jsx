@@ -15,6 +15,10 @@ import ExpenseCard from './ExpenseCard'
 const ExpenseForm = ({ isEditing=false, planId }) => {
     const [expenses, setExpenses] = useState([])
 
+    const handleExpenseChange = () => {
+        fetchExpenses()
+    }
+
     const fetchExpenses = async () => {
         try {
             const expensesData = await getExpenses(planId)
@@ -35,16 +39,16 @@ const ExpenseForm = ({ isEditing=false, planId }) => {
     return (
         <Card className="p-5">
             {isEditing ?
-                <CreateExpenseModal planId={planId} />
+                <CreateExpenseModal planId={planId} onAddSuccess={handleExpenseChange} />
                :
                 <div className="flex justify-between items-center -mx-5 px-5 pb-5 border-b-1">
                     <CardTitle className="text-2xl">Expenses</CardTitle>
-                    <CardTitle className="text-3xl">${totalExpenses}</CardTitle>
+                    <CardTitle className="text-3xl">${totalExpenses.toFixed(2)}</CardTitle>
                 </div>
             }
             {expenses.map((expense, index) => {
                 return (
-                    <ExpenseCard key={index} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} />
+                    <ExpenseCard key={index} id={expense.id} planId={planId} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} onDeleteSuccess={handleExpenseChange} />
                 )
             })}
         </Card>

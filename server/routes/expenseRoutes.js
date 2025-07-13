@@ -40,4 +40,27 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Delete expense 
+router.delete('/:expenseId', async (req, res) => {
+    try {
+        const user_id = req.user.id
+        const plan_id = req.params.id
+        const expense_id = req.params.expenseId
+
+        const result = await pool.query(
+            `DELETE FROM expenses WHERE user_id = $1 AND plan_ID = $2 AND id = $3`,
+            [user_id, plan_id, expense_id]
+        )
+
+        // rowCount returns number of things deleted
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Expense not found or you do not have permission to delete it" })
+        }
+
+        res.status(204).send()
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
 export default router
