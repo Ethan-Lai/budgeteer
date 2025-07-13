@@ -9,7 +9,6 @@ export const getExpenses = async (planId) => {
             'Authorization': `Bearer ${token}`
         }
     })
-    console.log(response.data)
 
     return response.data.expenses
 }

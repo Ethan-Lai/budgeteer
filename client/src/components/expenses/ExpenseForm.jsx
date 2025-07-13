@@ -25,7 +25,7 @@ const ExpenseForm = ({ isEditing=false, planId }) => {
     }
 
     const totalExpenses = expenses.reduce((total, expense) => {
-        return total + parseInt(expense.amount)
+        return total + parseFloat(expense.amount)
     }, 0)
 
     useEffect(() => {
@@ -34,13 +34,14 @@ const ExpenseForm = ({ isEditing=false, planId }) => {
 
     return (
         <Card className="p-5">
-            {!isEditing &&
+            {isEditing ?
+                <CreateExpenseModal planId={planId} />
+               :
                 <div className="flex justify-between items-center -mx-5 px-5 pb-5 border-b-1">
                     <CardTitle className="text-2xl">Expenses</CardTitle>
                     <CardTitle className="text-3xl">${totalExpenses}</CardTitle>
                 </div>
             }
-            {isEditing  && <CreateExpenseModal planId={planId} />}
             {expenses.map((expense, index) => {
                 return (
                     <ExpenseCard key={index} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} />

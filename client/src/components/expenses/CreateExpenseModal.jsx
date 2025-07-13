@@ -55,7 +55,7 @@ export function CreateExpenseModal({ planId }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full" variant="outline">Create Plan</Button>
+        <Button className="w-full" variant="outline">Add Expense</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
