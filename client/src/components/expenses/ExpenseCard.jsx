@@ -17,7 +17,7 @@ import ConfirmationModal from "../ui/ConfirmationModal"
 import ExpenseCardEdit from "./ExpenseCardEdit"
 import { useState } from "react"
 
-const ExpenseCard = ({ id, planId, amount, category, description, date, onExpenseChange }) => {
+const ExpenseCard = ({ inEditView, id, planId, amount, category, description, date, onExpenseChange }) => {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleDelete = async () => {
@@ -46,20 +46,25 @@ const ExpenseCard = ({ id, planId, amount, category, description, date, onExpens
                 </div>
                 <div className="flex items-center gap-3">
                     <CardTitle className="text-xl">${amount}</CardTitle>
-                    <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={() => setIsEditing(!isEditing)}
-                    >
-                        <PenLine className="size-6 text-blue-400" />
-                        <span className="sr-only">Edit Button</span>
-                    </Button>
-                    <ConfirmationModal 
-                        type="Delete" 
-                        handleFunction={handleDelete} 
-                        className="text-red-400" 
-                        iconOnly={true} 
-                    />
+                    {inEditView &&
+                        <>
+                            <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="text-blue-400"
+                                onClick={() => setIsEditing(!isEditing)}
+                            >
+                                <PenLine className="size-6" />
+                                <span className="sr-only">Edit Button</span>
+                            </Button>
+                            <ConfirmationModal 
+                                type="Delete" 
+                                handleFunction={handleDelete} 
+                                className="text-red-400" 
+                                iconOnly={true} 
+                            />
+                        </>
+                    }
                 </div>
             </div>
             

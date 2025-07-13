@@ -48,7 +48,7 @@ const ExpenseForm = ({ isEditing=false, planId }) => {
             }
             {expenses.map((expense, index) => {
                 return (
-                    <ExpenseCard key={index} id={expense.id} planId={planId} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} onExpenseChange={handleExpenseChange} />
+                    <ExpenseCard key={index} inEditView={isEditing} id={expense.id} planId={planId} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} onExpenseChange={handleExpenseChange} />
                 )
             })}
         </Card>
