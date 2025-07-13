@@ -10,6 +10,8 @@ import {
 import { Badge } from "../ui/badge"
 import { formatDate } from "@/lib/utils"
 import { Label } from "../ui/label"
+import { PenLine } from "lucide-react"
+import { Trash2 } from "lucide-react"
 
 const ExpenseCard = ({ amount, category, description, date }) => {
     return (
@@ -21,7 +23,11 @@ const ExpenseCard = ({ amount, category, description, date }) => {
                 </div>
                 <Label className="text-lg">{description}</Label>
             </div>
-            <CardTitle className="text-xl">${amount}</CardTitle>
+            <div className="flex items-center gap-3">
+                <CardTitle className="text-xl">${amount}</CardTitle>
+                <PenLine className="text-blue-400"/>
+                <Trash2 className="text-red-400"/>
+            </div>
         </Card>
     )
 }

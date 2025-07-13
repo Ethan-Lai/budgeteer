@@ -73,6 +73,7 @@ const PlanDetails = () => {
                 <Card className="p-5">
                     <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} onSaveSuccess={handleSaveSuccess} />
                 </Card>
+                <ExpenseForm isEditing={true} planId={id} />
             </TabsContent>
         </Tabs>
     )

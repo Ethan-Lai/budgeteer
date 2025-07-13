@@ -65,7 +65,7 @@ export function CreateExpenseModal({ planId }) {
               Add a new expense with the amount, description, date and category.
             </DialogDescription>
             {error && 
-                <DialogDescription className="text-red-500">
+                <DialogDescription className="text-red-400">
                     {error}
                 </DialogDescription>      
             }

@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react'
 import { getExpenses } from '@/services/expenseService'
-import { formatDate } from '@/lib/utils'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import CreateExpenseModal from './CreateExpenseModal'
 import ExpenseCard from './ExpenseCard'
 
-const ExpenseForm = ({ planId }) => {
+const ExpenseForm = ({ isEditing=false, planId }) => {
     const [expenses, setExpenses] = useState([])
 
     const fetchExpenses = async () => {
@@ -16,19 +24,29 @@ const ExpenseForm = ({ planId }) => {
         }
     }
 
+    const totalExpenses = expenses.reduce((total, expense) => {
+        return total + parseInt(expense.amount)
+    }, 0)
+
     useEffect(() => {
         fetchExpenses()
     }, [])
 
     return (
-        <div>
-            <CreateExpenseModal planId={planId} />
+        <Card className="p-5">
+            {!isEditing &&
+                <div className="flex justify-between items-center -mx-5 px-5 pb-5 border-b-1">
+                    <CardTitle className="text-2xl">Expenses</CardTitle>
+                    <CardTitle className="text-3xl">${totalExpenses}</CardTitle>
+                </div>
+            }
+            {isEditing  && <CreateExpenseModal planId={planId} />}
             {expenses.map((expense, index) => {
                 return (
                     <ExpenseCard key={index} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} />
                 )
             })}
-        </div>
+        </Card>
     )
 }
 
