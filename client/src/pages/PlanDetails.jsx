@@ -65,11 +65,11 @@ const PlanDetails = () => {
                 </TabsList>
             </div>
 
-            <TabsContent value="view" className="pt-5">
+            <TabsContent value="view" className="pt-5 flex flex-col gap-7">
                 <PlanCardExpanded id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
                 <ExpenseForm planId={id} />
             </TabsContent>
-            <TabsContent value="edit" className="pt-5">
+            <TabsContent value="edit" className="pt-5 flex flex-col gap-7">
                 <Card className="p-5">
                     <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} onSaveSuccess={handleSaveSuccess} />
                 </Card>

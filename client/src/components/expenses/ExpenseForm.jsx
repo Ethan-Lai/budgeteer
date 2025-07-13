@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { getExpenses } from '@/services/expenseService'
 import { formatDate } from '@/lib/utils'
 import CreateExpenseModal from './CreateExpenseModal'
+import ExpenseCard from './ExpenseCard'
 
 const ExpenseForm = ({ planId }) => {
     const [expenses, setExpenses] = useState([])
@@ -24,13 +25,7 @@ const ExpenseForm = ({ planId }) => {
             <CreateExpenseModal planId={planId} />
             {expenses.map((expense, index) => {
                 return (
-                    <div className="flex flex-col" key={index}>
-                        <span>Amount:${expense.amount}</span>
-                        <span>category: {expense.category}</span>
-                        <span>description: {expense.description}</span>
-                        <span>date: {formatDate(expense.date)}</span>
-                        <br />
-                    </div>
+                    <ExpenseCard key={index} amount={expense.amount} category={expense.category} date={expense.date} description={expense.description} />
                 )
             })}
         </div>
