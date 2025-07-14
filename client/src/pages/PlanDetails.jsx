@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import PlanCardEdit from "@/components/plans/PlanCardEdit";
 import { getPlan } from "@/services/planService";
+import ExpenseForm from "@/components/expenses/ExpenseForm";
 
 const PlanDetails = () => {
     const { id } = useParams()
@@ -64,13 +65,15 @@ const PlanDetails = () => {
                 </TabsList>
             </div>
 
-            <TabsContent value="view" className="pt-5">
+            <TabsContent value="view" className="pt-5 flex flex-col gap-7">
                 <PlanCardExpanded id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} />
+                <ExpenseForm planId={id} />
             </TabsContent>
-            <TabsContent value="edit" className="pt-5">
+            <TabsContent value="edit" className="pt-5 flex flex-col gap-7">
                 <Card className="p-5">
                     <PlanCardEdit isEditing={true} id={id} title={planDetails.title} start_date={planDetails.start_date} end_date={planDetails.end_date} onSaveSuccess={handleSaveSuccess} />
                 </Card>
+                <ExpenseForm isEditing={true} planId={id} />
             </TabsContent>
         </Tabs>
     )

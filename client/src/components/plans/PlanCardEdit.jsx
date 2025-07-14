@@ -14,8 +14,6 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
     const [editTitle, setEditTitle] = useState("")
     const [editStartDate, setEditStartDate] = useState()
     const [editEndDate, setEditEndDate] = useState()
-    const [showSaveModal, setShowSaveModal] = useState(false)
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     // NOTE: Do this instead of directly loading into state since we are waiting on async data
     //       Thus, need to display once the info has been passed down properly
@@ -34,7 +32,9 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
         }
     }
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault()
+
         if (!editStartDate && !editEndDate) {
             setError("Both start and end dates are not valid dates!")
             return 
@@ -79,7 +79,7 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
         <form onSubmit={handleSave}>
             <div className="grid gap-4">
                 {error && 
-                    <span className="text-red-500">
+                    <span className="text-red-400">
                         {error}
                     </span>
                 }
@@ -120,8 +120,8 @@ const PlanCardEdit = ({ isEditing=false, id, title, start_date, end_date, onSave
 
                 {isEditing && (
                     <div className="flex justify-end gap-3">
-                        <ConfirmationModal type="Save" handleFunction={handleSave} />
-                        <ConfirmationModal type="Delete" handleFunction={handleDelete} className="bg-red-600" />
+                        <Button type="submit">Save</Button>
+                        <ConfirmationModal type="Delete" handleFunction={handleDelete} className="bg-red-500" />
                     </div>
                 )}
             </div>

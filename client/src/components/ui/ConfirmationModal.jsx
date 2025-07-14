@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { useRef } from "react"
+import { Trash2 } from "lucide-react"
 
-const ConfirmationModal = ({ type, handleFunction, className="" }) => {
+const ConfirmationModal = ({ type, handleFunction, className="", iconOnly=false }) => {
     const closeRef = useRef(null)
 
     const handleClick = async () => {
@@ -22,16 +23,21 @@ const ConfirmationModal = ({ type, handleFunction, className="" }) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button className={className}>{type}</Button>
-      </AlertDialogTrigger>
+        <AlertDialogTrigger asChild>
+        {iconOnly ? (
+            <Button variant="ghost" size="icon" className={className}>
+                <Trash2 className="size-6 " />
+            </Button>
+        ) : (
+            <Button className={className}>{type}</Button>
+        )}
+        </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+            <AlertDialogTitle>Delete this plan?</AlertDialogTitle>
+            <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your plan and all associated expenses, and details.
+            </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel ref={closeRef}>Cancel</AlertDialogCancel>

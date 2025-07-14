@@ -13,7 +13,7 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
-import PlanForm from "../plans/CreatePlanModal"
+import CreatePlanModal from "../plans/CreatePlanModal"
 import { logoutUser } from "@/services/authService"
 
 // Menu items.
@@ -57,7 +57,7 @@ export function AppSidebar() {
             <SidebarMenu>
                 <div className="flex flex-col h-full justify-between">
                     <SidebarMenuItem>
-                        <PlanForm />
+                        <CreatePlanModal />
                     </SidebarMenuItem>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>

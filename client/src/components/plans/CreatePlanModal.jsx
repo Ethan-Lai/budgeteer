@@ -79,7 +79,7 @@ export function CreatePlanModal() {
               Create a new plan with dates and title.
             </DialogDescription>
             {error && 
-                <DialogDescription className="text-red-500">
+                <DialogDescription className="text-red-400">
                     {error}
                 </DialogDescription>      
             }
